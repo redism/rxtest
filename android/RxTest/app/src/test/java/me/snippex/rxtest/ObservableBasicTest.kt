@@ -146,5 +146,54 @@ class ObservableBasicTest {
                 .takeWhile { it < 20 }
                 .blockingForEach { pp("subscribe : $it") }
     }
+
+    @Test
+    fun basicMap() {
+        generate("1,2,3")
+                .map { it + 10 }
+                .doOnNext { pp("subscribe : $it") }
+                .test()
+                .await()
+                .assertValues(11, 12, 13)
+    }
+
+    @Test
+    fun window() {
+
+        //  [RxComputationThreadPool-1] Emitting value : 1
+        //  [RxComputationThreadPool-1] doOnNext: io.reactivex.subjects.UnicastSubject@3f2e0b59
+        //  [main] inner doOnEach: OnNextNotification[1]
+        //  [RxComputationThreadPool-2] Emitting value : 2
+        //  [RxComputationThreadPool-2] inner doOnEach: OnNextNotification[2]
+        //  [RxComputationThreadPool-3] Emitting value : 3
+        //  [RxComputationThreadPool-3] inner doOnEach: OnNextNotification[3]
+        //  [RxComputationThreadPool-4] Emitting value : 4
+        //  [RxComputationThreadPool-4] inner doOnEach: OnNextNotification[4]
+        //  [RxComputationThreadPool-4] inner doOnEach: OnCompleteNotification
+        //  [RxComputationThreadPool-1] Emitting value : 5
+        //  [RxComputationThreadPool-1] doOnNext: io.reactivex.subjects.UnicastSubject@3947f64f
+        //  [main] inner doOnEach: OnNextNotification[5]
+        //  [RxComputationThreadPool-2] Emitting value : 6
+        //  [RxComputationThreadPool-2] inner doOnEach: OnNextNotification[6]
+        //  [RxComputationThreadPool-3] Emitting value : 7
+        //  [RxComputationThreadPool-3] inner doOnEach: OnNextNotification[7]
+        //  [RxComputationThreadPool-3] inner doOnEach: OnCompleteNotification
+        //
+        // 관전포인트
+        // =======
+        // 마지막 종료 Completion 은 다 채우지 않아도 Complete 됨.
+        // buffer 와의 차별점.
+        // 다양한 추가적인 파라메터들이 있고, 이는 buffer 와 거의 동일함.
+        //
+
+        generate("1,2,3,4,5,6,7", 100)
+                .doOnNext { pp("Emitting value : $it") }
+                .window(4)
+                .doOnNext { pp("doOnNext: $it") }
+                .blockingForEach {
+                    it.doOnEach { pp("inner doOnEach: $it") }
+                            .subscribe()
+                }
+    }
 }
 
