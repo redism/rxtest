@@ -24,3 +24,6 @@ fun generate(streamString: String, delayInMS: Long = 1000): Observable<Int> {
     return generateObservable(streamString.split(",").map { it.takeIf { it.isNotEmpty() }?.toIntOrNull() }, delayInMS)
 }
 
+fun <T> Observable<T>.testResults(vararg values: T) {
+    this.test().await().assertResult(*values)
+}
