@@ -1,6 +1,7 @@
 package me.snippex.rxtest
 
 import io.reactivex.Observable
+import io.reactivex.functions.Function
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
@@ -132,6 +133,51 @@ class ObservableCombiningTest {
                 .assertValues(1, 2, 3)
                 .assertError(IllegalArgumentException::class.java)
 
+    }
+
+    @Test
+    fun startWith() {
+        generate("1,2,3", 10).startWith(0)
+                .testResults(0, 1, 2, 3)
+
+        generate("1,2,3", 10).startWithArray(0, 0, 0)
+                .testResults(0, 0, 0, 1, 2, 3)
+
+        generate("1,2,3", 10).startWith(listOf(0, 0, 0))
+                .testResults(0, 0, 0, 1, 2, 3)
+
+        generate("1,2,3", 10).startWith(generate("0,0,0", 10))
+                .testResults(0, 0, 0, 1, 2, 3)
+    }
+
+    @Test
+    fun switchOnNext() {
+        val streams: Observable<Observable<Int>> = generate("1,2,3", 70).map { value ->
+            Observable.interval(40, TimeUnit.MILLISECONDS).map { value }.take(2)
+        }
+
+        Observable.switchOnNext(streams)
+                .testResults(1, 2, 3, 3)
+    }
+
+    @Test
+    fun zip() {
+        val sources = listOf(generate("1,2,3,4,5", 10), generate("5,6,7,8", 20))
+        Observable.zip(sources, { items: Array<out Any> -> items[0] as Int * items[1] as Int })
+                .testResults(5, 12, 21, 32)
+
+
+        // Zipping observable of observables
+        //  => 오리지널 스트림이 하위 스트림 생성을 끝내야만 zipping 이 시작된다.
+        val streams: Observable<Observable<Int>> = generate("1,2,3", 500).map { value ->
+            //            pp("in $value")
+            Observable.interval(40, TimeUnit.MILLISECONDS).map { value }.take(2)
+//                    .doOnNext { pp("interval $it") }
+        }
+        Observable.zip<Int, String>(streams, Function { items -> "${items[0]},${items[1]},${items[2]}" })
+                .testResults("1,2,3", "1,2,3")
+
+        // zipArray, zipIterable 있음. delayError 옵션 있음.
     }
 
 }
