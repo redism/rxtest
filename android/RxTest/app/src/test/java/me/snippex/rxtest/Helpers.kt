@@ -27,3 +27,7 @@ fun generate(streamString: String, delayInMS: Long = 1000): Observable<Int> {
 fun <T> Observable<T>.testResults(vararg values: T) {
     this.test().await().assertResult(*values)
 }
+
+fun <T> Observable<T>.print() {
+    this.blockingForEach { pp("$it") }
+}
