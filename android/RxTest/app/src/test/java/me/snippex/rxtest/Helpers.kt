@@ -31,3 +31,15 @@ fun <T> Observable<T>.testResults(vararg values: T) {
 fun <T> Observable<T>.print() {
     this.blockingForEach { pp("$it") }
 }
+
+fun interval(ms: Long): Observable<Int> {
+    return Observable.interval(ms, TimeUnit.MILLISECONDS).map { it.toInt() }
+}
+
+fun <T> Observable<T>.printNext(header: String = ""): Observable<T> {
+    return this.doOnNext { pp("$header$it") }
+}
+
+fun <T> Observable<T>.printEach(header: String = ""): Observable<T> {
+    return this.doOnEach { pp("$header$it") }
+}
