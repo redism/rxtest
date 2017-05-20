@@ -1,10 +1,16 @@
 package me.snippex.rxtest
 
 import io.reactivex.Observable
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 fun pp(msg: String) {
-    println(" [${Thread.currentThread().name}] $msg")
+    val date = Date()
+    val strDateFormat = "mm:ss.SSS"
+    val dateFormat = SimpleDateFormat(strDateFormat)
+    val formattedDate = dateFormat.format(date)
+    println(" [$formattedDate] [${Thread.currentThread().name}] $msg")
 }
 
 fun <T> generateObservable(list: List<T?>, delayInMS: Long = 1000): Observable<T> {
@@ -28,6 +34,7 @@ fun <T> Observable<T>.testResults(vararg values: T) {
     this.test().await().assertResult(*values)
 }
 
+// TODO: rename as dump
 fun <T> Observable<T>.print() {
     this.blockingForEach { pp("$it") }
 }
