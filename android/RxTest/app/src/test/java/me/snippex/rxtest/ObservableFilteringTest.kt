@@ -5,7 +5,6 @@ import io.reactivex.schedulers.Schedulers
 import org.junit.Test
 import java.util.TreeSet
 import java.util.concurrent.TimeUnit
-import kotlin.Boolean
 import kotlin.NoSuchElementException
 
 class ObservableFilteringTest {
@@ -226,5 +225,23 @@ class ObservableFilteringTest {
                 .testResults(5)
     }
 
+    @Test
+    fun ofType() {
+
+        //  [12:33.978] [main] before ofType : 1
+        //  [12:33.986] [main] after ofType : 1
+        //  [12:33.986] [main] before ofType : 2
+        //  [12:33.986] [main] after ofType : 2
+        //  [12:33.987] [main] before ofType : 3
+        //  [12:33.987] [main] before ofType : 4
+        //  [12:33.987] [main] after ofType : 4
+
+        Observable.just(1, 2, "3", 4)
+                .printNext("before ofType : ")
+                .ofType(Integer::class.java)
+                .printNext("after ofType : ")
+                .map { i -> i.toInt() }
+                .testResults(1, 2, 4)
+    }
 }
 
