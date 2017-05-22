@@ -2,6 +2,7 @@ package me.snippex.rxtest
 
 import io.reactivex.Observable
 import io.reactivex.functions.Function
+import io.reactivex.rxkotlin.zipWith
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
@@ -178,6 +179,12 @@ class ObservableCombiningTest {
                 .testResults("1,2,3", "1,2,3")
 
         // zipArray, zipIterable 있음. delayError 옵션 있음.
+    }
+
+    @Test
+    fun zipWith() {
+        Observable.just(1, 2, 3, 4).zipWith(Observable.just(4, 5, 6), { x: Int, y: Int -> x + y })
+                .testResults(5, 7, 9)
     }
 
 }
