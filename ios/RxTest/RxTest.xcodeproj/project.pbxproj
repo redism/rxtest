@@ -24,6 +24,8 @@
 		A02587281ED579F4006C980C /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A02587261ED579F4006C980C /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A025872A1ED579F4006C980C /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02587291ED579F4006C980C /* RxBlocking.framework */; };
 		A025872B1ED579F4006C980C /* RxBlocking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A02587291ED579F4006C980C /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A025872E1ED57AFF006C980C /* ObservableBasicTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A025872D1ED57AFF006C980C /* ObservableBasicTest.swift */; };
+		A02587301ED57B50006C980C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A025872F1ED57B50006C980C /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		A02587231ED579F3006C980C /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A02587261ED579F4006C980C /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A02587291ED579F4006C980C /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A025872D1ED57AFF006C980C /* ObservableBasicTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableBasicTest.swift; sourceTree = "<group>"; };
+		A025872F1ED57B50006C980C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,9 +106,6 @@
 		A02586E91ED5788B006C980C = {
 			isa = PBXGroup;
 			children = (
-				A02587291ED579F4006C980C /* RxBlocking.framework */,
-				A02587261ED579F4006C980C /* RxCocoa.framework */,
-				A02587231ED579F3006C980C /* RxSwift.framework */,
 				A02586F41ED5788B006C980C /* RxTest */,
 				A02587091ED5788B006C980C /* RxTestTests */,
 				A02586F31ED5788B006C980C /* Products */,
@@ -139,6 +140,8 @@
 			children = (
 				A025870A1ED5788B006C980C /* RxTestTests.swift */,
 				A025870C1ED5788B006C980C /* Info.plist */,
+				A025872D1ED57AFF006C980C /* ObservableBasicTest.swift */,
+				A025872F1ED57B50006C980C /* Helpers.swift */,
 			);
 			path = RxTestTests;
 			sourceTree = "<group>";
@@ -146,6 +149,9 @@
 		A02587151ED57941006C980C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A02587291ED579F4006C980C /* RxBlocking.framework */,
+				A02587261ED579F4006C980C /* RxCocoa.framework */,
+				A02587231ED579F3006C980C /* RxSwift.framework */,
 				A025871E1ED57956006C980C /* RxCocoa.framework */,
 				A025871C1ED57951006C980C /* RxCocoa.framework */,
 				A025871A1ED5794C006C980C /* RxBlocking.framework */,
@@ -268,6 +274,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A025870B1ED5788B006C980C /* RxTestTests.swift in Sources */,
+				A02587301ED57B50006C980C /* Helpers.swift in Sources */,
+				A025872E1ED57AFF006C980C /* ObservableBasicTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
